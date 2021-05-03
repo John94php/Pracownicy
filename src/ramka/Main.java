@@ -12,7 +12,7 @@ public class Main  extends JFrame {
 
         int szer = Toolkit.getDefaultToolkit().getScreenSize().width;
         int wys = Toolkit.getDefaultToolkit().getScreenSize().height;
-        this.setSize(szer / 2, wys / 2);
+        this.setSize(szer / 2, wys / 4 );
         int szerRamki = this.getSize().width;
         int wysRamki = this.getSize().height;
         this.setLocation((szer - szerRamki) / 2, (wys - wysRamki) / 2);
@@ -38,7 +38,7 @@ public class Main  extends JFrame {
         container.add(list);
         container.add(edit);
         container.add(czas);
-        czas.setFont(new Font("Monospace",Font.ITALIC,15));
+        czas.setFont(new Font("Monospaced",Font.ITALIC,15));
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,6 +71,9 @@ public class Main  extends JFrame {
         String h = "" + kalendarz.get(Calendar.HOUR_OF_DAY);
         String min = "" + kalendarz.get(Calendar.MINUTE);
         String sec = "" + kalendarz.get(Calendar.SECOND);
+        String day = "" + kalendarz.get(Calendar.DAY_OF_MONTH);
+        String month = "" + kalendarz.get(Calendar.MONTH);
+        String year = "" + kalendarz.get(Calendar.YEAR);
         if (Integer.parseInt(h) < 10) {
             h = "0" + h;
         } else if (Integer.parseInt(min) < 10) {
@@ -78,7 +81,8 @@ public class Main  extends JFrame {
         } else if (Integer.parseInt(sec) < 10) {
             sec = "0" + sec;
         }
-        return "" + h + ":" + min + ":" + sec;
+        String date = "" + day + "." + month + "." + year;
+        return "" + h + ":" + min + ":" + sec + "|| " + date;
 
     }
 
