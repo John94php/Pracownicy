@@ -16,9 +16,9 @@ public class Main extends JFrame {
         ActionListener stoper = new Zegar();
         Timer zegar = new Timer(1000, stoper);
         zegar.start();
-        this.setTitle("Pracownicy");
-        this.setBounds(300, 300, 300, 200);
-        panelMenu.setLayout(new GridLayout(4, 1));
+        this.setTitle("Zarządzanie pracownikami " );
+        this.setBounds(100, 100, 800, 200);
+        panelMenu.setLayout(new GridLayout(2, 2));
         panelMenu.add(menu1);
         panelMenu.add(menu2);
         panelMenu.add(menu3);
@@ -38,8 +38,8 @@ public class Main extends JFrame {
 
     MenuButton menu1 = new MenuButton("Dodaj pracownika");
     MenuButton menu2 = new MenuButton("Lista pracownikow");
-    MenuButton menu3 = new MenuButton("Usuń pracownika");
-    MenuButton menu4 = new MenuButton("Edytuj pracownika");
+    MenuButton menu3 = new MenuButton("Edytuj pracownika");
+    MenuButton menu4 = new MenuButton("Usuń pracownika");
     JLabel czas = new JLabel(pobierzCzas());
     private int i = 0;
 
@@ -97,6 +97,8 @@ public class Main extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Akcja");
+            JOptionPane.showMessageDialog(this,((MenuButton)e.getSource()).getText());
+
 
         }
     }
