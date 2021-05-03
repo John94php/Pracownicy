@@ -2,8 +2,7 @@ package ramka;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -13,35 +12,92 @@ public class Main extends JFrame {
     }
 
     public void initComponents() {
-
         czas.setFont(new Font("Monospaced", Font.ITALIC, 15));
-
         ActionListener stoper = new Zegar();
         Timer zegar = new Timer(1000, stoper);
         zegar.start();
         this.setTitle("Pracownicy");
         this.setBounds(300, 300, 300, 200);
-        panelMenu.setLayout(new GridLayout(5, 1));
+        panelMenu.setLayout(new GridLayout(4, 1));
         panelMenu.add(menu1);
         panelMenu.add(menu2);
         panelMenu.add(menu3);
         panelMenu.add(menu4);
-        panelMenu.add(czas);
+        panelCzas.add(czas);
         container.add(panelMenu);
+
         this.setDefaultCloseOperation(3);
+        this.setResizable(false);
 
     }
 
-    private final Container container = this.getContentPane();
-    private final JPanel panelMenu = new JPanel();
-    private final MenuButton menu1 = new MenuButton("Dodaj pracownika");
-    private final MenuButton menu2 = new MenuButton("Lista pracownikow");
-    private final MenuButton menu3 = new MenuButton("Usuń pracownika");
-    private final MenuButton menu4 = new MenuButton("Edytuj pracownika");
+
+    JPanel panelMenu = new JPanel();
+    JPanel panelCzas = new JPanel();
+    Container container = this.getContentPane();
+
+    MenuButton menu1 = new MenuButton("Dodaj pracownika");
+    MenuButton menu2 = new MenuButton("Lista pracownikow");
+    MenuButton menu3 = new MenuButton("Usuń pracownika");
+    MenuButton menu4 = new MenuButton("Edytuj pracownika");
     JLabel czas = new JLabel(pobierzCzas());
-    private class MenuButton extends JButton {
+    private int i = 0;
+
+    private class MenuButton extends JButton implements FocusListener, ActionListener {
         public MenuButton(String nazwa) {
             super(nazwa);
+            this.addFocusListener(this);
+            this.addActionListener(this);
+            this.addKeyListener(new KeyAdapter() {
+
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    keyPressedHandler(e);
+                }
+
+            });
+
+        }
+
+        @Override
+        public void focusGained(FocusEvent e) {
+            this.setBackground(Color.darkGray);
+            this.setForeground(Color.WHITE);
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            this.setBackground(null);
+            this.setForeground(null);
+        }
+
+        private void keyPressedHandler(KeyEvent e) {
+            int lMenu = panelMenu.getComponentCount(); // length of menu
+            if (i == 0) i = 10 * lMenu;
+            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+
+                panelMenu.getComponent(++i % lMenu).requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+
+                panelMenu.getComponent(--i % lMenu).requestFocus();
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                panelMenu.getComponent(++i % lMenu).requestFocus();
+
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                panelMenu.getComponent(--i % lMenu).requestFocus();
+
+            } else if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                ((MenuButton)e.getSource()).doClick();
+            }
+
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Akcja");
+
         }
     }
 
@@ -72,7 +128,6 @@ public class Main extends JFrame {
 
     }
 
-    static int i = 1;
 
     public static void main(String[] args) {
         new Main().setVisible(true);
