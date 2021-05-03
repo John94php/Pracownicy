@@ -13,7 +13,7 @@ public class Main extends JFrame {
     }
 
     public void initComponents() {
-        JLabel czas = new JLabel(pobierzCzas());
+
         czas.setFont(new Font("Monospaced", Font.ITALIC, 15));
 
         ActionListener stoper = new Zegar();
@@ -38,7 +38,7 @@ public class Main extends JFrame {
     private final MenuButton menu2 = new MenuButton("Lista pracownikow");
     private final MenuButton menu3 = new MenuButton("Usuń pracownika");
     private final MenuButton menu4 = new MenuButton("Edytuj pracownika");
-
+    JLabel czas = new JLabel(pobierzCzas());
     private class MenuButton extends JButton {
         public MenuButton(String nazwa) {
             super(nazwa);
@@ -48,6 +48,7 @@ public class Main extends JFrame {
     private class Zegar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            czas.setText(pobierzCzas());
         }
     }
 
