@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Main extends JFrame {
+public class Main extends JFrame implements WindowListener {
     public Main() {
         initComponents();
     }
@@ -14,13 +14,17 @@ public class Main extends JFrame {
     public void initComponents() {
         czas.setFont(new Font("Monospaced", Font.ITALIC, 15));
         ActionListener stoper = new Zegar();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
         Timer zegar = new Timer(1000, stoper);
         zegar.start();
         this.setTitle("Zarządzanie pracownikami " );
-        this.setBounds(100, 100, 800, 200);
-        panelMenu.setLayout(new GridLayout(2, 2));
+        this.setBounds(0, 0, width/2, height/2);
+        this.addWindowListener(this);
+        panelMenu.setLayout(new GridLayout(4, 1));
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.metal.MetalLookAndFeel");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -31,7 +35,7 @@ public class Main extends JFrame {
         panelCzas.add(czas);
         container.add(panelMenu);
 
-        this.setDefaultCloseOperation(3);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
 
     }
@@ -44,8 +48,48 @@ public class Main extends JFrame {
     MenuButton menu2 = new MenuButton("Lista pracownikow");
     MenuButton menu3 = new MenuButton("Edytuj pracownika");
     MenuButton menu4 = new MenuButton("Usuń pracownika");
+
     JLabel czas = new JLabel(pobierzCzas());
     private int i = 0;
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        JOptionPane.showMessageDialog(container,"Witaj");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+   int opcja =      JOptionPane.showConfirmDialog(container,"Czy na pewno chcesz wyjść?");
+        if(opcja == 0) {
+            JOptionPane.showMessageDialog(container,"Do zobaczenia");
+
+            this.setDefaultCloseOperation(3);
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 
     private class MenuButton extends JButton implements FocusListener, ActionListener {
         public MenuButton(String nazwa) {
@@ -100,11 +144,17 @@ public class Main extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Akcja");
-            JOptionPane.showMessageDialog(this,((MenuButton)e.getSource()).getText());
-
+           String opcja =  ((MenuButton)e.getSource()).getText();
+                if(opcja == "Dodaj pracownika")
+                new addNew().setVisible(true);
+                if(opcja == "Lista pracownikow")
+                    new showList().setVisible(true);
+                if(opcja == "Edytuj pracownika") {
+                    new edit().setVisible(true);
+                }
 
         }
+
     }
 
     private class Zegar implements ActionListener {
