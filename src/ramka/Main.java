@@ -19,6 +19,11 @@ public class Main extends JFrame {
         this.setTitle("Zarządzanie pracownikami " );
         this.setBounds(100, 100, 800, 200);
         panelMenu.setLayout(new GridLayout(2, 2));
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         panelMenu.add(menu1);
         panelMenu.add(menu2);
         panelMenu.add(menu3);
@@ -35,7 +40,6 @@ public class Main extends JFrame {
     JPanel panelMenu = new JPanel();
     JPanel panelCzas = new JPanel();
     Container container = this.getContentPane();
-
     MenuButton menu1 = new MenuButton("Dodaj pracownika");
     MenuButton menu2 = new MenuButton("Lista pracownikow");
     MenuButton menu3 = new MenuButton("Edytuj pracownika");
