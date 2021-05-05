@@ -14,7 +14,6 @@ public class showList extends JFrame {
         this.setTitle("Lista pracowników");
         this.setBounds(630, 0, width/2, height/2);
         this.setLocationRelativeTo(null);
-
-
     }
+
 }
