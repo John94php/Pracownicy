@@ -1,6 +1,5 @@
 package ramka;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class addNew extends JFrame {
+public class addNew extends JPanel {
+
     public addNew() {
         initComponents();
     }
@@ -19,49 +19,40 @@ public class addNew extends JFrame {
         czas.setFont(new Font("Monospaced", Font.ITALIC, 15));
         Timer zegar = new Timer(1000, stoper);
         zegar.start();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) screenSize.getWidth();
-        int height = (int) screenSize.getHeight();
-        this.setTitle("Dodaj pracownika");
-        this.setBounds(630, 0, width / 2, height/2);
-        mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
-        container.add(mainPanel);
         timePanel.setBackground(Color.BLACK);
         czas.setForeground(Color.WHITE);
-        mainPanel.add(nameLabel);
+        add(nameLabel);
         nameLabel.setText("Podaj imię\r\n");
-        mainPanel.add(nameTextField);
-        mainPanel.add(surnameLabel);
+        add(nameTextField);
+        add(surnameLabel);
         surnameLabel.setText("Podaj nazwisko \r\n");
-        mainPanel.add(surnameTextField);
-        mainPanel.add(PESELLabel);
+        add(surnameTextField);
+        add(PESELLabel);
         PESELLabel.setText("Podaj nr PESEL\r\n");
-        mainPanel.add(PESELTextField);
-        mainPanel.add(codeAddressLabel);
-        codeAddressLabel.setText("Podaj kod pocztowy adresu zamieszkania\r\n");
-        mainPanel.add(codeAddressTextField);
-        mainPanel.add(cityAddressLabel);
-        cityAddressLabel.setText("Podaj miejscowość adresu zamieszkania\r\n");
-        mainPanel.add(cityAddressTextField);
-        mainPanel.add(streetAddressLabel);
-        streetAddressLabel.setText("Podaj ulicę adresu zamieszkania\r\n");
-        mainPanel.add(streetAddressTextField);
-        mainPanel.add(houseAddressLabel);
-        houseAddressLabel.setText("Podaj numer domu adresu zamieszkania\r\n");
-        mainPanel.add(houseAddressTextField);
-        mainPanel.add(equalsAddressCheckBox);
-        equalsAddressCheckBox.setText("Zaznacz jeżeli adres do korespondencji jest inny niż zamieszkania");
+        add(PESELTextField);
+        add(codeAddressLabel);
+        codeAddressLabel.setText("Podaj kod pocztowy adresu korespondencyjnego\r\n");
+        add(codeAddressTextField);
+        add(cityAddressLabel);
+        cityAddressLabel.setText("Podaj miejscowość adresu korespondencyjnego\r\n");
+        add(cityAddressTextField);
+        add(streetAddressLabel);
+        streetAddressLabel.setText("Podaj ulicę adresu korespondencyjnego\r\n");
+        add(streetAddressTextField);
+        add(houseAddressLabel);
+        houseAddressLabel.setText("Podaj numer domu adresu korespondencyjnego\r\n");
+        add(houseAddressTextField);
         saveButton.setText("Zapisz");
-        mainPanel.add(saveButton);
+        add(saveButton, BorderLayout.SOUTH);
         timePanel.add(czas);
-        this.add(timePanel,BorderLayout.PAGE_END);
-
+        this.add(timePanel, BorderLayout.SOUTH);
+        this.setLayout(new GridLayout(17,1));
     }
+
     Action actionsave = new ActionSave("Zapisz");
-    JPanel mainPanel = new JPanel();
     JPanel timePanel = new JPanel();
 
-    Container container =this.getContentPane();
+
     JLabel nameLabel = new JLabel();
     JLabel surnameLabel = new JLabel();
     JLabel PESELLabel = new JLabel();
@@ -69,16 +60,16 @@ public class addNew extends JFrame {
     JLabel cityAddressLabel = new JLabel();
     JLabel streetAddressLabel = new JLabel();
     JLabel houseAddressLabel = new JLabel();
-    JTextField houseAddressTextField = new JTextField("",1);
-    JTextField streetAddressTextField = new JTextField("",1);
-    JTextField cityAddressTextField = new JTextField("",1);
-    JTextField codeAddressTextField = new JTextField("",1);
-    JTextField nameTextField = new JTextField("",1);
-    JTextField surnameTextField = new JTextField("",1);
-    JTextField PESELTextField = new JTextField("",1);
+    JTextField houseAddressTextField = new JTextField("", 1);
+    JTextField streetAddressTextField = new JTextField("", 1);
+    JTextField cityAddressTextField = new JTextField("", 1);
+    JTextField codeAddressTextField = new JTextField("", 1);
+    JTextField nameTextField = new JTextField("", 1);
+    JTextField surnameTextField = new JTextField("", 1);
+    JTextField PESELTextField = new JTextField("", 1);
     JLabel czas = new JLabel(pobierzCzas());
     JButton saveButton = new JButton(actionsave);
-    JCheckBox equalsAddressCheckBox = new JCheckBox();
+
     private class Zegar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -106,11 +97,9 @@ public class addNew extends JFrame {
 
     }
 
-    private static class ActionSave extends AbstractAction
-    {
-        public ActionSave(String nazwa )
-        {
-            this.putValue(Action.NAME,nazwa);
+    private static class ActionSave extends AbstractAction {
+        public ActionSave(String nazwa) {
+            this.putValue(Action.NAME, nazwa);
 
         }
 
