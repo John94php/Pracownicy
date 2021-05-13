@@ -4,10 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class addNew extends JPanel {
+
+
+
 
     public addNew() {
         initComponents();
@@ -42,14 +47,49 @@ public class addNew extends JPanel {
         add(houseAddressLabel);
         houseAddressLabel.setText("Podaj numer domu adresu korespondencyjnego\r\n");
         add(houseAddressTextField);
+        add(flatAddressLabel);
+        flatAddressLabel.setText("Poda numer mieszkania adresu korespondencyjnego");
+        add(flatAddressTextField);
         saveButton.setText("Zapisz");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String getName = nameTextField.getText();
+                String getSurname = surnameTextField.getText();
+                String getPESEL = PESELTextField.getText();
+                String getZip = codeAddressTextField.getText();
+                String getCity = cityAddressTextField.getText();
+                String getStreet = streetAddressTextField.getText();
+                String getHouse = houseAddressTextField.getText();
+                String getFlat = flatAddressTextField.getText();
+                Date czas = new Date();
+                String created = String.format("%1$td.%1$tm.%1$tY %tT %n",czas);
+                PrintWriter plik = null;
+                try {
+                    plik = new PrintWriter(new FileWriter("pracownicy.csv",true));
+                    plik.printf("%s %s %s %s %s %s %s %s %s",getName,getSurname,getPESEL,getZip,getCity,getStreet,getHouse,getFlat,created);
+                    plik.close();
+                    JOptionPane.showMessageDialog(null,"Dodano");
+                    nameTextField.setText("");
+                    surnameTextField.setText("");
+                    PESELTextField.setText("");
+                    codeAddressTextField.setText("");
+                    cityAddressTextField.setText("");
+                    streetAddressTextField.setText("");
+                    houseAddressTextField.setText("");
+                    flatAddressTextField.setText("");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
         add(saveButton, BorderLayout.SOUTH);
         timePanel.add(czas);
         this.add(timePanel, BorderLayout.SOUTH);
-        this.setLayout(new GridLayout(17,1));
+        this.setLayout(new GridLayout(18,1));
     }
 
-    Action actionsave = new ActionSave("Zapisz");
+
     JPanel timePanel = new JPanel();
 
 
@@ -60,6 +100,8 @@ public class addNew extends JPanel {
     JLabel cityAddressLabel = new JLabel();
     JLabel streetAddressLabel = new JLabel();
     JLabel houseAddressLabel = new JLabel();
+    JLabel flatAddressLabel = new JLabel();
+    JTextField flatAddressTextField = new JTextField("",1);
     JTextField houseAddressTextField = new JTextField("", 1);
     JTextField streetAddressTextField = new JTextField("", 1);
     JTextField cityAddressTextField = new JTextField("", 1);
@@ -68,7 +110,7 @@ public class addNew extends JPanel {
     JTextField surnameTextField = new JTextField("", 1);
     JTextField PESELTextField = new JTextField("", 1);
     JLabel czas = new JLabel(pobierzCzas());
-    JButton saveButton = new JButton(actionsave);
+    JButton saveButton = new JButton("Zapisz");
 
     private class Zegar implements ActionListener {
         @Override
@@ -97,16 +139,32 @@ public class addNew extends JPanel {
 
     }
 
-    private static class ActionSave extends AbstractAction {
-        public ActionSave(String nazwa) {
-            this.putValue(Action.NAME, nazwa);
-
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Zapisano");
-        }
-    }
+//    private static class ActionSave extends AbstractAction {
+//
+//        public ActionSave(String nazwa) {
+//            this.putValue(Action.NAME, nazwa);
+//
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            System.out.println("Zapisano");
+//            // Zapis do pliku (?)
+//            try {
+//                String name = "Jan";
+//                String surname = "Wolff";
+//                String PESEL = "94060810321";
+//                String zipcode = "80-156";
+//                String city = "Gdańsk";
+//                String street = "Kartuska";
+//                String house = "77a";
+//                String flat = "6";
+//
+//            } catch (IOException ex) {
+//                System.out.println(ex.getMessage());
+//            }
+//
+//        }
+//    }
 
 }

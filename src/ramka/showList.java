@@ -27,11 +27,12 @@ public class showList extends JPanel {
             "Miejscowość",
             "Ulica",
             "Nr domu",
-            "Nr mieszkania"
-
+            "Nr mieszkania",
+            "Data dodania",
+            "Godzina dodania"
         };
     Object[][] data = {
-            {"Jan","Zalesiński","94030210412","80-156","Gdańsk","Kartuska ","77A","6"}
+            {"Jan","Zalesiński","94030210412","80-156","Gdańsk","Kartuska ","77A","6","13.05.2021","16:52:59"}
     };
     JTable table = new JTable(data,columns);
 
